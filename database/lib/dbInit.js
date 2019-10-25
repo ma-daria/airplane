@@ -17,15 +17,15 @@ Flight.belongsTo(Airport, { foreignKey: 'flight_airport_to', targetKey: 'id', on
 
 
 async function init () {
-    await Country.sync({force:true});
-    await City.sync({force:true});
-    await Airport.sync({force:true});
-    await Flight.sync({force:true});
+//     await Country.sync({force:true});
+//     await City.sync({force:true});
+//     await Airport.sync({force:true});
+//     await Flight.sync({force:true});
 
-    // await Country.sync();
-    // await City.sync();
-    // await Airport.sync();
-    // await Flight.sync();
+    await Country.sync();
+    await City.sync();
+    await Airport.sync();
+    await Flight.sync();
 }
 
 (async function f () {
