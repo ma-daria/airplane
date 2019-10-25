@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+require('./database/lib/dbInit');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
