@@ -15,7 +15,7 @@ const  flight = sequelize.define('flight', {
     },
 
     flight_data_to: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DATE,
     },
 
     flight_price: {
