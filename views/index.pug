@@ -10,7 +10,7 @@ body
   .container
     // Поиск
     .row
-      form.form-inline.col-sm-12.col-md-12(action="/index")
+      form.form-inline.col-sm-12.col-md-12(action="/search")
         .col-sm-12.col-md-3
           .input-group
             if (c_from === undefined)
@@ -25,10 +25,10 @@ body
               input#city_to.form-control(type='text' placeholder='куда' name="city_to" value = c_to)
         .col-sm-12.col-md-3
           .input-group
-            if (data === undefined)
-              input#data.form-control(type='date' placeholder='когда' name="data")
+            if (date === undefined)
+              input#date_fl.form-control(type='date' placeholder='когда' name="date_fl")
             else
-              input#data.form-control(type='date' placeholder='когда' name="data" value = data)
+              input#date_fl.form-control(type='date' placeholder='когда' name="date_fl" value = date)
         .col-sm-12.col-md-3
           button.btn.btn-dark.btn-block(type='submit' style='background-color: #3f294f;') Найти
     // Результат
