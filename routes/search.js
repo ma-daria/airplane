@@ -7,7 +7,6 @@ router.get('/', async function (req, res) {
     city_to = req.query.city_to;
     date_f = req.query.date_fl;
 
-    console.log(city_from);
 
 
     res.render('index', {
