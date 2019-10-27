@@ -13,22 +13,22 @@ body
       form.form-inline.col-sm-12.col-md-12(action="/search")
         .col-sm-12.col-md-3
           .input-group
-            if (c_from === undefined)
-              input#city_from.form-control(type='text' placeholder='откуда' name="city_from")
+            if (cFrom === undefined)
+              input#cityFrom.form-control(type='text' placeholder='откуда' name="cityFrom")
             else
-              input#city_from.form-control(type='text' placeholder='откуда' name="city_from" value = c_from)
+              input#cityFrom.form-control(type='text' placeholder='откуда' name="cityFrom" value = cFrom)
         .col-sm-12.col-md-3
           .input-group
-            if (c_to === undefined)
-              input#city_to.form-control(type='text' placeholder='куда' name="city_to")
+            if (cTo === undefined)
+              input#cityTo.form-control(type='text' placeholder='куда' name="cityTo")
             else
-              input#city_to.form-control(type='text' placeholder='куда' name="city_to" value = c_to)
+              input#cityTo.form-control(type='text' placeholder='куда' name="cityTo" value = cTo)
         .col-sm-12.col-md-3
           .input-group
             if (date === undefined)
-              input#date_fl.form-control(type='date' placeholder='когда' name="date_fl")
+              input#dateFl.form-control(type='date' placeholder='когда' name="dateFl")
             else
-              input#date_fl.form-control(type='date' placeholder='когда' name="date_fl" value = date)
+              input#dateFl.form-control(type='date' placeholder='когда' name="dateFl" value = date)
         .col-sm-12.col-md-3
           button.btn.btn-dark.btn-block(type='submit' style='background-color: #3f294f;') Найти
     // Результат
