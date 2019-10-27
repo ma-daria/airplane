@@ -16,13 +16,13 @@ router.get('/', async function (req, res) {
 
     let  cityFrom = req.query.cityFrom;
     let cityTo = req.query.cityTo;
-    let dateF = req.query.dateFl;
+    let dateFrom = req.query.dateFrom;
 
-    let d = new Date(dateF);
-    let dd = d.getTimezoneOffset();
-    d.setMinutes(d.getMinutes()+dd);
+    let dateFromTypeDate = new Date(dateFrom);
+    let myTimeZone = dateFromTypeDate.getTimezoneOffset();
+    dateFromTypeDate.setMinutes(dateFromTypeDate.getMinutes()+myTimeZone);
 
-    let from = await city.findOne({
+    let cityFromID = await city.findOne({
         attributes: ['id'],
         where: {city_name: cityFrom}
     })
@@ -30,7 +30,7 @@ router.get('/', async function (req, res) {
             console.log(err)
         });
 
-    let to = await city.findOne({
+    let cityToID = await city.findOne({
         attributes: ['id'],
         where: {city_name: cityTo}
     })
@@ -38,22 +38,21 @@ router.get('/', async function (req, res) {
             console.log(err)
         });
 
-    await Search(from.dataValues.id, d);
+    await Search(cityFromID.dataValues.id, dateFromTypeDate);
 
-    console.log(flightMas);
 
     res.render('index', {
         cFrom: cityFrom,
         cTo: cityTo,
-        date: dateF
+        date: dateFrom
     });
 });
 
 
-async function Search(cityFrom, dateF) {
+async function Search(cityFrom, dateFrom) {
     visitedSity.push(cityFrom);
 
-    let airFrom = await airport.findAll({
+    let airportFromAll = await airport.findAll({
         attributes: ['id'],
         where: {airport_city: cityFrom}
     })
@@ -61,34 +60,34 @@ async function Search(cityFrom, dateF) {
             console.log(err)
         });
 
-    let airFromId = airFrom.map((o) => o.dataValues.id);
-    let fli = await flight.findAll({
+    let airportFromAllId = airportFromAll.map((o) => o.dataValues.id);
+    let flightAll = await flight.findAll({
         where: {
-            flight_airport_from: { [Op.or]: airFromId },
+            flight_airport_from: { [Op.or]: airportFromAllId },
 
-            flight_data_from: { [Op.gt]: dateF }
+            flight_data_from: { [Op.gt]: dateFrom }
         }
     })
         .catch((err) => {
             console.log(err)
         });
 
-    for (let i = 0 ; i < fli.length; i++){
+    for (let i = 0 ; i < flightAll.length; i++){
 
-        let sitT = await airport.findOne({
+        let airportTo = await airport.findOne({
             where: {
-            id: fli[i].dataValues.flight_airport_to
+            id: flightAll[i].dataValues.flight_airport_to
             }
         })
             .catch((err) => {
                 console.log(err)
             });
 
-        flightMas.push([fli[i].dataValues.id, cityFrom, sitT.dataValues.airport_city, fli[i].dataValues.flight_price]);
+        flightMas.push([flightAll[i].dataValues.id, cityFrom, airportTo.dataValues.airport_city, flightAll[i].dataValues.flight_price]);
 
 
-        if (visitedSity.indexOf(sitT.dataValues.airport_city) === -1)
-            await Search(sitT.dataValues.airport_city, fli[i].dataValues.flight_data_to);
+        if (visitedSity.indexOf(airportTo.dataValues.airport_city) === -1)
+            await Search(airportTo.dataValues.airport_city, flightAll[i].dataValues.flight_data_to);
     }
 }
 
