@@ -1,3 +1,5 @@
+const Dijkstra = require('../algorithm/Dijkstra');
+
 const Sequelize = require('sequelize');
 
 var express = require('express');
@@ -36,9 +38,13 @@ router.get('/', async function (req, res) {
         });
 
     let flightMas = [];
-    let visitedSity = [];
+    let visitedSity = [];  //to do change {}
     await Search(cityFromID.dataValues.id, dateFromTypeDate, flightMas, visitedSity);
+
+    let mas = Dijkstra.Dijkstra(flightMas , cityFromID.dataValues.id, cityToID.dataValues.id);
+
     console.log(flightMas);
+    console.log(mas[0], mas[1]);
 
     res.render('index', {
         cFrom: cityFrom,
@@ -89,7 +95,6 @@ async function Search(cityFrom, dateFrom, flightMas, visitedSity) {
             await Search(airportTo.dataValues.airport_city, flightAll[i].dataValues.flight_data_to, flightMas, visitedSity);
     }
 }
-
 
 
 
