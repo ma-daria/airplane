@@ -9,9 +9,6 @@ const flight = require('../database/models/flight');
 
 const Op = Sequelize.Op;
 
-let flightMas = [];
-let visitedSity = [];
-
 router.get('/', async function (req, res) {
 
     let  cityFrom = req.query.cityFrom;
@@ -38,8 +35,10 @@ router.get('/', async function (req, res) {
             console.log(err)
         });
 
-    await Search(cityFromID.dataValues.id, dateFromTypeDate);
-
+    let flightMas = [];
+    let visitedSity = [];
+    await Search(cityFromID.dataValues.id, dateFromTypeDate, flightMas, visitedSity);
+    console.log(flightMas);
 
     res.render('index', {
         cFrom: cityFrom,
@@ -49,7 +48,7 @@ router.get('/', async function (req, res) {
 });
 
 
-async function Search(cityFrom, dateFrom) {
+async function Search(cityFrom, dateFrom, flightMas, visitedSity) {
     visitedSity.push(cityFrom);
 
     let airportFromAll = await airport.findAll({
@@ -87,7 +86,7 @@ async function Search(cityFrom, dateFrom) {
 
 
         if (visitedSity.indexOf(airportTo.dataValues.airport_city) === -1)
-            await Search(airportTo.dataValues.airport_city, flightAll[i].dataValues.flight_data_to);
+            await Search(airportTo.dataValues.airport_city, flightAll[i].dataValues.flight_data_to, flightMas, visitedSity);
     }
 }
 
