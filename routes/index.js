@@ -3,17 +3,13 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-  CForm = undefined;
-  CTo = undefined;
-  DateFli = undefined;
-
-
-
   res.render('index', {
-    cFrom: CForm,
-    cTo: CTo,
-    date: DateFli
-
+    cFrom: undefined,
+    cTo: undefined,
+    date: undefined,
+    flightDateFrom: undefined,
+    flightDateTo: undefined,
+    flightCheap: undefined
   });
 });
 

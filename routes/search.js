@@ -71,8 +71,7 @@ router.get('/', async function (req, res) {
         date: dateFrom,
         flightDateFrom: flightDateFrom.dataValues.flight_data_from,
         flightDateTo: flightDateTo.dataValues.flight_data_to,
-        quantity: flightCheap[0].length,
-        price: flightCheap[1]
+        flightCheap: flightCheap
     });
 });
 
