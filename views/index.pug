@@ -43,7 +43,7 @@ body
             th цена
         tbody
           if (flightCheap !== undefined)
-            tr(onclick="window.location.href='/about_flights?flightCheap='+"+flightCheap + "; return false")
+            tr(onclick="window.location.href='/about_flights?flightCheap=["+flightCheap + "]'; return false")
               td #{flightDateFrom}
               td #{flightDateTo}
               td #{flightCheap[0].length}

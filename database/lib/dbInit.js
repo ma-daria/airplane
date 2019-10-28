@@ -10,10 +10,10 @@ City.hasMany(Airport, { foreignKey: 'airport_city', sourceKey: 'id', onDelete: '
 Airport.belongsTo(City, { foreignKey: 'airport_city', targetKey: 'id', onDelete: 'restrict', onUpdate: 'restrict' });
 
 Airport.hasMany(Flight, { foreignKey: 'flight_airport_from', sourceKey: 'id', onDelete: 'restrict', onUpdate: 'restrict'});
-Flight.belongsTo(Airport, { foreignKey: 'flight_airport_from', targetKey: 'id', onDelete: 'restrict', onUpdate: 'restrict' });
+Flight.belongsTo(Airport, { as: 'airport_from', foreignKey: 'flight_airport_from', targetKey: 'id', onDelete: 'restrict', onUpdate: 'restrict' });
 
 Airport.hasMany(Flight, { foreignKey: 'flight_airport_to', sourceKey: 'id', onDelete: 'restrict', onUpdate: 'restrict'});
-Flight.belongsTo(Airport, { foreignKey: 'flight_airport_to', targetKey: 'id', onDelete: 'restrict', onUpdate: 'restrict' });
+Flight.belongsTo(Airport, { as: 'airport_to', foreignKey: 'flight_airport_to', targetKey: 'id', onDelete: 'restrict', onUpdate: 'restrict' });
 
 
 async function init () {

@@ -3,6 +3,16 @@ head
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
     title no aviasales
 
+    mixin rowsTable(cityFrom, airoportFrom, dateFrom, cityTo, airoportTo, dateTo, price)
+        tr
+            td #{cityFrom} [ #{ airoportFrom} ]
+            td #{dateFrom}
+            td #{cityTo} [ #{ airoportTo} ]
+            td #{dateTo}
+            td #{price}
+    mixin test(test)
+        tr
+            td #{test}
 body
     .container
         br
@@ -16,6 +26,23 @@ body
                         th время прибытия
                         th цена
                 tbody
+                    -for(let i = 0; i < flightCheapAllInfarmation.length; i++)
+                        +rowsTable(
+                            flightCheapAllInfarmation[i].airport_from.city.dataValues.city_name,
+                            flightCheapAllInfarmation[i].airport_from.dataValues.airport_name,
+                            flightCheapAllInfarmation[i].dataValues.flight_data_from,
+                            flightCheapAllInfarmation[i].airport_to.city.dataValues.city_name,
+                            flightCheapAllInfarmation[i].airport_to.dataValues.airport_name,
+                            flightCheapAllInfarmation[i].dataValues.flight_data_to,
+                            flightCheapAllInfarmation[i].dataValues.flight_price
+                        )
+                    tr
+                        td
+                        td
+                        td
+                        td #{ timeWay}
+                        td #{flightCheapCost}
+
 
     nav.navbar.fixed-bottom.navbar-expand-sm.navbar-light.bg-light
         footer.main-footer.d-flex.p-2.px-3(style='margin: 0 0 0 auto;')
