@@ -23,7 +23,9 @@ router.get('/', async function (req, res) {
 
     let cityFromID = await city.findOne({
         attributes: ['id'],
-        where: {city_name: cityFrom}
+        where: {
+            city_name: cityFrom
+        }
     })
         .catch((err) => {
             console.log(err)
@@ -31,7 +33,9 @@ router.get('/', async function (req, res) {
 
     let cityToID = await city.findOne({
         attributes: ['id'],
-        where: {city_name: cityTo}
+        where: {
+            city_name: cityTo
+        }
     })
         .catch((err) => {
             console.log(err)
@@ -41,15 +45,34 @@ router.get('/', async function (req, res) {
     let visitedSity = [];  //to do change {}
     await Search(cityFromID.dataValues.id, dateFromTypeDate, flightMas, visitedSity);
 
-    let mas = Dijkstra.Dijkstra(flightMas , cityFromID.dataValues.id, cityToID.dataValues.id);
+    let flightCheap = Dijkstra.Dijkstra(flightMas , cityFromID.dataValues.id, cityToID.dataValues.id);
 
-    console.log(flightMas);
-    console.log(mas[0], mas[1]);
+    let flightDateFrom = await flight.findOne({
+        where:{
+            id: flightCheap[0][0]
+        }
+    })
+        .catch((err) => {
+            console.log(err)
+        });
+
+    let flightDateTo = await flight.findOne({
+        where:{
+            id: flightCheap[0][flightCheap[0].length - 1]
+        }
+    })
+        .catch((err) => {
+            console.log(err)
+        });
 
     res.render('index', {
         cFrom: cityFrom,
         cTo: cityTo,
-        date: dateFrom
+        date: dateFrom,
+        flightDateFrom: flightDateFrom.dataValues.flight_data_from,
+        flightDateTo: flightDateTo.dataValues.flight_data_to,
+        quantity: flightCheap[0].length,
+        price: flightCheap[1]
     });
 });
 

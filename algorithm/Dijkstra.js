@@ -5,7 +5,7 @@ function Dijkstra(flightMas, cityFrom, cityTo){
 
     let quantityCity = QuantityCity(flightMas);
     let vertices = cityFrom;
-    wayToCity[cityFrom] = [cityFrom];
+    wayToCity[cityFrom] = [];
     priceToCity[cityFrom] = 0;
     do{
         visitedCity[vertices] = true;
@@ -15,7 +15,7 @@ function Dijkstra(flightMas, cityFrom, cityTo){
                     priceToCity[flightMas[i][2]] = priceToCity[flightMas[i][1]] + flightMas[i][3];
                     // let wayFrom = wayToCity[flightMas[i][1]];
                     let wayFrom = Object.assign([], wayToCity[flightMas[i][1]]);
-                    wayFrom.push(flightMas[i][2]);
+                    wayFrom.push(flightMas[i][0]);
                     wayToCity[flightMas[i][2]] = wayFrom;
                 }
             }

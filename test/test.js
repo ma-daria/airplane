@@ -16,7 +16,7 @@ describe('Array', function() {
                 [ 11, 3, 1, 4 ],
                 [ 12, 2, 8, 6 ],
                 [ 13, 8, 5, 7 ] ];
-            assert.equal(String(Dijkstra.Dijkstra(flightMas, 2 ,1)), String([[2, 4, 7, 1], 7]));
+            assert.equal(String(Dijkstra.Dijkstra(flightMas, 2 ,1)), String([[1, 3, 5], 7]));
 
         });
     });
