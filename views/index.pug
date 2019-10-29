@@ -14,21 +14,21 @@ body
         .col-sm-12.col-md-3
           .input-group
             if (cFrom === undefined)
-              input#cityFrom.form-control(type='text' placeholder='откуда' name="cityFrom")
+              input#cityFrom.form-control(type='text' placeholder='откуда' required=true name="cityFrom")
             else
-              input#cityFrom.form-control(type='text' placeholder='откуда' name="cityFrom" value = cFrom)
+              input#cityFrom.form-control(type='text' placeholder='откуда' required=true name="cityFrom" value = cFrom)
         .col-sm-12.col-md-3
           .input-group
             if (cTo === undefined)
-              input#cityTo.form-control(type='text' placeholder='куда' name="cityTo")
+              input#cityTo.form-control(type='text' placeholder='куда' required=true name="cityTo")
             else
-              input#cityTo.form-control(type='text' placeholder='куда' name="cityTo" value = cTo)
+              input#cityTo.form-control(type='text' placeholder='куда' required=true name="cityTo" value = cTo)
         .col-sm-12.col-md-3
           .input-group
             if (date === undefined)
-              input#dateFrom.form-control(type='date' placeholder='когда' name="dateFrom")
+              input#dateFrom.form-control(type='date' placeholder='когда' required=true name="dateFrom")
             else
-              input#dateFrom.form-control(type='date' placeholder='когда' name="dateFrom" value = date)
+              input#dateFrom.form-control(type='date' placeholder='когда' required=true name="dateFrom" value = date)
         .col-sm-12.col-md-3
           button.btn.btn-dark.btn-block(type='submit' style='background-color: #3f294f;') Найти
     // Результат
