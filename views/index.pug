@@ -43,11 +43,15 @@ body
             th цена
         tbody
           if (flightCheap !== undefined)
-            tr(onclick="window.location.href='/about_flights?flightCheap=["+flightCheap + "]'; return false")
-              td #{flightDateFrom}
-              td #{flightDateTo}
-              td #{flightCheap[0].length}
-              td #{flightCheap[1]}
+            if (flightCheap.length === 0)
+              tr
+                td Перелетов нет
+            else
+              tr(onclick="window.location.href='/about_flights?flightCheap=["+flightCheap + "]'; return false")
+                td #{flightDateFrom}
+                td #{flightDateTo}
+                td #{flightCheap[0].length}
+                td #{flightCheap[1]}
 
   nav.navbar.fixed-bottom.navbar-expand-sm.navbar-light.bg-light
     footer.main-footer.d-flex.p-2.px-3(style='margin: 0 0 0 auto;')

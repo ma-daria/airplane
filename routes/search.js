@@ -42,40 +42,55 @@ router.get('/', async function (req, res) {
         });
 
     let flightMas = [];
-    let visitedSity = [];  //to do change {}
-    await Search(cityFromID.dataValues.id, dateFromTypeDate, flightMas, visitedSity);
+    let visitedSity = [];
+    let flag = await Search(cityFromID.dataValues.id, dateFromTypeDate, flightMas, visitedSity);
 
-    let flightCheap = Dijkstra.Dijkstra(flightMas , cityFromID.dataValues.id, cityToID.dataValues.id);
+    let flightCheap = [];
+    let flightDateFrom;
+    let flightDateTo;
 
-    let flightDateFrom = await flight.findOne({
-        where:{
-            id: flightCheap[0][0]
-        }
-    })
-        .catch((err) => {
-            console.log(err)
-        });
+    if (flag) {
 
-    let flightDateTo = await flight.findOne({
-        where:{
-            id: flightCheap[0][flightCheap[0].length - 1]
-        }
-    })
-        .catch((err) => {
-            console.log(err)
-        });
+
+
+        flightCheap = Dijkstra.Dijkstra(flightMas, cityFromID.dataValues.id, cityToID.dataValues.id);
+
+        let flightDateFromBD= await flight.findOne({
+            where: {
+                id: flightCheap[0][0]
+            }
+        })
+            .catch((err) => {
+                console.log(err)
+            });
+
+        let flightDateToBD = await flight.findOne({
+            where: {
+                id: flightCheap[0][flightCheap[0].length - 1]
+            }
+        })
+            .catch((err) => {
+                console.log(err)
+            });
+
+        flightDateFrom = flightDateFromBD.dataValues.flight_data_from;
+        flightDateTo = flightDateToBD.dataValues.flight_data_to;
+    }
 
     res.render('index', {
         cFrom: cityFrom,
         cTo: cityTo,
         date: dateFrom,
-        flightDateFrom: flightDateFrom.dataValues.flight_data_from,
-        flightDateTo: flightDateTo.dataValues.flight_data_to,
+        flightDateFrom: flightDateFrom,
+        flightDateTo: flightDateTo,
         flightCheap: flightCheap
     });
 });
 
 
+/**
+ * @return {boolean}
+ */
 async function Search(cityFrom, dateFrom, flightMas, visitedSity) {
     visitedSity.push(cityFrom);
 
@@ -99,6 +114,10 @@ async function Search(cityFrom, dateFrom, flightMas, visitedSity) {
             console.log(err)
         });
 
+    if ((flightAll === undefined) || (flightAll.length === 0)){
+        return false;
+    }
+
     for (let i = 0 ; i < flightAll.length; i++){
 
         let airportTo = await airport.findOne({
@@ -116,6 +135,7 @@ async function Search(cityFrom, dateFrom, flightMas, visitedSity) {
         if (visitedSity.indexOf(airportTo.dataValues.airport_city) === -1)
             await Search(airportTo.dataValues.airport_city, flightAll[i].dataValues.flight_data_to, flightMas, visitedSity);
     }
+    return true
 }
 
 
