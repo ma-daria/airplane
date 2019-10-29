@@ -1,5 +1,68 @@
-extends layout
+head
+  meta(charset='UTF-8')
+  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+  title no aviasales
 
-block content
-  h1= title
-  p Welcome to #{title}
+body
+
+  br
+  // Основное поле
+  .container
+    // Поиск
+    .row
+      form.form-inline.col-sm-12.col-md-12(action="/search")
+        .col-sm-12.col-md-3
+          .input-group
+            if (cFrom === undefined)
+              input#cityFrom.form-control(type='text' placeholder='откуда' required=true name="cityFrom")
+            else
+              input#cityFrom.form-control(type='text' placeholder='откуда' required=true name="cityFrom" value = cFrom)
+        .col-sm-12.col-md-3
+          .input-group
+            if (cTo === undefined)
+              input#cityTo.form-control(type='text' placeholder='куда' required=true name="cityTo")
+            else
+              input#cityTo.form-control(type='text' placeholder='куда' required=true name="cityTo" value = cTo)
+        .col-sm-12.col-md-3
+          .input-group
+            if (date === undefined)
+              input#dateFrom.form-control(type='date' placeholder='когда' required=true name="dateFrom")
+            else
+              input#dateFrom.form-control(type='date' placeholder='когда' required=true name="dateFrom" value = date)
+        .col-sm-12.col-md-3
+          button.btn.btn-dark.btn-block(type='submit' style='background-color: #3f294f;') Найти
+    // Результат
+    br
+    div
+      table.table.table-hover
+        thead.bg-light.text-primary
+          tr
+            th время отправки
+            th время прилета
+            th кол-во пересадок
+            th цена
+        tbody
+          if (flightCheap !== undefined)
+            if (flightCheap.length === 0)
+              tr
+                td Перелетов нет
+            else
+              tr(onclick="window.location.href='/about_flights?flightCheap=["+flightCheap + "]'; return false")
+                td #{flightDateFrom}
+                td #{flightDateTo}
+                td #{flightCheap[0].length}
+                td #{flightCheap[1]}
+
+  nav.navbar.fixed-bottom.navbar-expand-sm.navbar-light.bg-light
+    footer.main-footer.d-flex.p-2.px-3(style='margin: 0 0 0 auto;')
+      span.text-muted.ml-auto.my-auto.mr-2 no aviasales &copy; 2019 ma_daria
+
+
+
+
+  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
+  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+  script(src='javascripts/chek_city.js')
+
+
